@@ -42,7 +42,10 @@ class HLSMedia:
             for segment_duration in range:
                 content.append(self.make_key_line(self.doc.get('_id'), self.ray, segment_count))
                 content.append("#EXTINF:{},".format(segment_duration))
-                content.append(segment_url_template.format(self.ray.upper(), segment_count))
+                content.append(segment_url_template.format(**{
+                    'prefix': self.ray.upper(),
+                    'segment_number': segment_count})
+                               )
                 segment_count += 1
 
 
@@ -62,4 +65,3 @@ class HLSMedia:
         key_line = '#EXT-X-KEY:METHOD={},URI="{}",IV=0x{:032X}'.format(method, key_url, segment_count)
         # key_line = '#EXT-X-KEY:METHOD={},URI="{}"'.format(method, key_url, segment_count)
         return key_line
-

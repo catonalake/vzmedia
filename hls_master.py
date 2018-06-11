@@ -1,7 +1,7 @@
 import urllib.parse
 
 from data import ASSETS
-from templates import hls_master_head, hls_master_ray, hls_master_ifo_ray
+from templates import hls_master_head, hls_master_ray
 
 
 class HLSMasterManifest:
