@@ -24,7 +24,7 @@ To get the code up and running:
  1. For each bitrate/resolution, create a media playlist that lists the URLs for each of the video segments of that bitrate/resolution in the order they're to be played. Upload this list to an HTTP-accessible location
  1. Create a master playlist that contains the URLs of each of the media playlists from the previous step. Upload this master playlist to an HTTP-accessible location. The URL for the master playlist is the URL for your video stream.
  
- An HLS compatible client will be capable of taking the master playlist URL displaying the video stream it describes.
+ An HLS compatible client will be capable of taking the master playlist URL and displaying the video stream it describes.
  
  # Exercise Tasks:
  1. Customers report that playback works for asset `d7415eeeb78a4aca9ce6e10735ddd76b` but returns an HTTP 500 error for asset `9c498f15770c4f189f7b9b862ce98f88`. Please fix this bug.
