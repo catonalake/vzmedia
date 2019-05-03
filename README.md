@@ -27,6 +27,8 @@ To get the code up and running:
  An HLS compatible client will be capable of taking the master playlist URL and displaying the video stream it describes.
  
  # Exercise Tasks:
+ 1. This folder is a Git repo. Create a new branch, and commit your work to the new branch as you perform the following tasks.
+
  1. Customers report that playback works for asset `d7415eeeb78a4aca9ce6e10735ddd76b` but returns an HTTP 500 error for asset `9c498f15770c4f189f7b9b862ce98f88`. Please fix this bug.
  
  1. Return an HTTP 404 (instead of 500) response to requests for the master playlist of an `asset_id` that doesn't exist. Do the same for media playlists.
