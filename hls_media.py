@@ -5,7 +5,7 @@ from data import ASSETS
 from templates import hls_media_head
 
 
-class HLSMedia:
+class HLSMediaManifest:
     def __init__(self, request, asset_id, ray):
         """
         Used to create an HLS media playlist for an asset record. Endpoints will
@@ -18,6 +18,14 @@ class HLSMedia:
         self.doc = ASSETS[asset_id]
         self.doc.update({'hls_version': 4})
         self.ray = ray
+
+        self.is_subtitle = True if self.ray.startswith('sub') else False
+        if self.is_subtitle:
+            self.segment_prefix = "{:02d}".format(int(self.ray.split('sub')[1]))
+            self.segment_extension = 'vtt'
+        else:
+            self.segment_prefix = self.ray.upper()
+            self.segment_extension = 'ts'
 
     def to_string(self):
         """
@@ -38,16 +46,20 @@ class HLSMedia:
         # Segment list
         segment_count = 0
         segment_url_template = self.doc.get('segment_url_template')
+
         for range in self.doc.get('range_durations'):
             for segment_duration in range:
-                content.append(self.make_key_line(self.doc.get('_id'), self.ray, segment_count))
+                if not self.is_subtitle:
+                    # Subtitle tracks aren't encrypted. So they don't need keys.
+                    content.append(self.make_key_line(self.doc.get('_id'), self.ray, segment_count))
+                
                 content.append("#EXTINF:{},".format(segment_duration))
                 content.append(segment_url_template.format(**{
-                    'prefix': self.ray.upper(),
-                    'segment_number': segment_count})
+                    'prefix': self.segment_prefix,
+                    'segment_number': segment_count,
+                    'extension': self.segment_extension})
                                )
                 segment_count += 1
-
 
         # end the playlist
         content.append("#EXT-X-ENDLIST")
