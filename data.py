@@ -21,7 +21,6 @@ ASSETS = {
             'd': {'avg_bps': 1660124.15, 'bytes': 87234068, 'fps': 30, 'h': 480, 'name': 'd', 'peak_bps': 1775351, 'w': 640},
             'e': {'avg_bps': 2393824.38, 'bytes': 125787604, 'fps': 30, 'h': 480, 'name': 'e', 'peak_bps': 2750601, 'w': 640}},
         'segment_url_template': 'https://x-default-stge1c.downlynk.com/slices/9c4/14916d3fc6bf4b17b879319ede03585c/9c498f15770c4f189f7b9b862ce98f88/{prefix}{segment_number:08X}.{extension}',
-
     },
 
     'd7415eeeb78a4aca9ce6e10735ddd76b': {
