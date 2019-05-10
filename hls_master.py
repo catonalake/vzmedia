@@ -14,6 +14,7 @@ class HLSMasterManifest:
         :param request: the GUID for an asset whose master playlist we want to generate
         """
         self.request = request
+        self.asset_id = asset_id
         self.doc = ASSETS[asset_id]
         self.doc.update({'hls_version': 4})
 

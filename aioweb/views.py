@@ -1,7 +1,7 @@
 from aiohttp import web
 
 from hls_master import HLSMasterManifest
-from hls_media import HLSMedia
+from hls_media import HLSMediaManifest
 
 # Class-based views don't currently work with decorators or CORS, so stick with function views
 routes = web.RouteTableDef()
@@ -9,6 +9,7 @@ headers = {
     'Cache-Control': 'no-cache, no-store, must-revalidate',
     'Pragma': 'no-cache',
     'Expires': '0',
+    'Content-Type': 'application/x-mpegURL'
 }
 
 
@@ -33,6 +34,6 @@ async def master_get(request):
 async def media_get(request):
     asset_id = request.match_info.get('asset_id', '')
     ray = request.match_info.get('ray', '')
-    manifest = HLSMedia(request, asset_id, ray)
+    manifest = HLSMediaManifest(request, asset_id, ray)
     return web.Response(text=manifest.to_string(), headers=headers)
 

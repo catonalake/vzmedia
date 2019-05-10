@@ -20,7 +20,7 @@ ASSETS = {
             'c': {'avg_bps': 753088.16, 'bytes': 39572308, 'fps': 30, 'h': 360, 'name': 'c', 'peak_bps': 782476, 'w': 480},
             'd': {'avg_bps': 1660124.15, 'bytes': 87234068, 'fps': 30, 'h': 480, 'name': 'd', 'peak_bps': 1775351, 'w': 640},
             'e': {'avg_bps': 2393824.38, 'bytes': 125787604, 'fps': 30, 'h': 480, 'name': 'e', 'peak_bps': 2750601, 'w': 640}},
-        'segment_url_template': 'https://x-default-stgec.downlynk.com/slices/9c4/14916d3fc6bf4b17b879319ede03585c/9c498f15770c4f189f7b9b862ce98f88/{prefix}{segment_number:08X}.ts',
+        'segment_url_template': 'https://x-default-stge1c.downlynk.com/slices/9c4/14916d3fc6bf4b17b879319ede03585c/9c498f15770c4f189f7b9b862ce98f88/{prefix}{segment_number:08X}.{extension}',
     },
 
     'd7415eeeb78a4aca9ce6e10735ddd76b': {
@@ -56,7 +56,7 @@ ASSETS = {
             'd': {'w': 960, 'h': 400, 'bytes': 153360248, 'fps': 30, 'avg_bps': 1671148, 'peak_bps': 1751851},
             'e': {'w': 1272, 'h': 530, 'bytes': 234669496, 'fps': 30, 'avg_bps': 2557165, 'peak_bps': 2709476},
         },
-        'segment_url_template': 'https://cdnec-dusw.downlynk.com/slices/d74/3533c4bbc0b24919b5b6f169c5279372/d7415eeeb78a4aca9ce6e10735ddd76b/{prefix}{segment_number:08X}.ts',
+        'segment_url_template': 'https://cdnec-dusw.downlynk.com/slices/d74/3533c4bbc0b24919b5b6f169c5279372/d7415eeeb78a4aca9ce6e10735ddd76b/{prefix}{segment_number:08X}.{extension}',
 
         'subtitles': {
             'sub3': {
