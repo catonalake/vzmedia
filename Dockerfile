@@ -4,6 +4,7 @@ COPY requirements.txt /requirements.txt
 
 RUN set -ex \
     && apk add --no-cache --virtual .build-deps \
+            libffi-dev \
     && python -m venv --upgrade /aioweb \
     && /aioweb/bin/pip install -U pip \
     && LIBRARY_PATH=/lib:/usr/lib /bin/sh -c "/aioweb/bin/pip install --no-cache-dir -r /requirements.txt" \
@@ -16,6 +17,10 @@ RUN set -ex \
     )" \
     && apk add --virtual .python-rundeps $run_deps \
     && apk del .build-deps
+
+RUN apk add --no-cache \
+    bash \
+    git
 
 RUN mkdir /code/
 WORKDIR /code/
