@@ -1,0 +1,41 @@
+---
+shared:
+  image: docker.ouroath.com:4443/uplynkylinux/adproxylinux7
+
+  environment:
+    UPLYNK_SYSLOG: disable
+
+jobs:
+  pytest:
+    requires: [~pr, ~commit]
+    annotations:
+      screwdriver.cd/timeout: 40
+    steps:
+      - init: |
+          pip install docker-compose
+          sd-cmd exec "docker/install@latest"
+      - aioweb: |
+          docker build -t aioweb .
+      - docker_tests: sh -c "docker-compose run --rm --user `id -u` aioweb pytest"
+  pylint:
+    requires: [~pr, ~commit]
+    annotations:
+      screwdriver.cd/timeout: 40
+    steps:
+      - init: |
+          pip install docker-compose
+          sd-cmd exec "docker/install@latest"
+      - aioweb: |
+          docker build -t aioweb .
+      - docker_lint: sh -c "docker-compose run --rm --user `id -u` aioweb pylint_runner"
+  build_ci_image:
+    image: docker.ouroath.com:4443/uplynkylinux/ylinux7
+    requires: [build_base_image]
+    annotations:
+      screwdriver.cd/timeout: 10
+    environment:
+      DOCKER_BUILD_ARGS: -f Dockerfile.screwdriver
+    steps:
+      - init: sd-cmd exec "docker/install@latest"
+      - build: sd-cmd exec "docker/build@latest" -f Dockerfile.screwdriver uplynkylinux/adproxylinux7
+      - push: sd-cmd exec "docker/push@latest" uplynkylinux/adproxylinux7

@@ -1,0 +1,31 @@
+[MASTER]
+# Use multiple processes to speed up Pylint.
+jobs=4
+
+# Custom Params
+ignore=tests,fixtures,conf.py
+
+[REPORTS]
+output-format=parseable
+
+[TYPECHECK]
+# List of module names for which member attributes should not be checked
+# (useful for modules/projects where namespaces are manipulated during runtime
+# and thus existing member attributes cannot be deduced by static analysis
+ignored-modules=distutils,distutils.util,six,six.moves,_MovedItems
+
+# Unnecessary suggestions
+#   R0903: Too few public methods
+#   R0913: Too many arguments
+#   R0901: Too many ancestors
+#   R0902: Too many instance attributes
+#   R1705: Unnecessary "elif" after "return" (no-else-return)
+#   R1721: Unnecessary use of a comprehension (unnecessary-comprehension)
+#   R1723: Unnecessary "elif" after "break" (no-else-break)
+#   C0204: Metaclass class method __new__ should have 'cls' as first argument (bad-mcs-classmethod-argument)
+
+# Disable the message(s) with the given id(s).
+disable=E1101,R0903,R0913,R0901,R0902,R0914,E1133,R1705,R1721,R1723,C0204
+
+[MISCELLANEOUS]
+notes=FIXME,TODO

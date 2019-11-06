@@ -1,0 +1,5 @@
+FROM docker.ouroath.com:4443/uplynkylinux/ylinux7
+
+COPY requirements.txt ./requirements.txt
+
+RUN pip install -r requirements.txt
