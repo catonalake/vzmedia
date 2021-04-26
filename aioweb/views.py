@@ -26,11 +26,19 @@ async def test(request):  # pragma: no cover
 @routes.get('/hls/vod/{asset_id}.m3u8')
 async def master_get(request):
     asset_id = request.match_info.get('asset_id', '')
+    params = request.rel_url.query
+    rays_to_return = []
 
-    # breakpoint() #cagdelete
+    #cag-ex4 - identify which rays (playlists) to return if any were specified 
+    if 'ray' in params:
+        rays_to_return = params.getall('ray')
+        print(f'rays to return are {rays_to_return}')
+    else:
+        print('no ray found')
+
     #cag-ex3 capture any errors in call to build Master
     try:
-        manifest = HLSMasterManifest(request, asset_id)
+        manifest = HLSMasterManifest(request, asset_id, rays_to_return)
     except:
         print(f'error in master_get with asset id {asset_id} - returning 404 here...')
         return web.Response(status=404)
@@ -41,8 +49,8 @@ async def master_get(request):
     except AttributeError:
         print('error in master_get critical property attribute missing - return 404 here...')
         return web.Response(status=404)
-    except:
-        print('error in master_get - return 404 here...')
+    except Exception as e:
+        print(f'error in master_get - return 404 here... {e}')
         return web.Response(status=404)
 
     return web.Response(text=text, headers=headers)

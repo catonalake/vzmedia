@@ -5,7 +5,7 @@ from templates import hls_master_head, hls_master_ray
 
 
 class HLSMasterManifest:
-    def __init__(self, request, asset_id):
+    def __init__(self, request, asset_id, rays_to_return):
         """
         Used to create an HLS master manifest for an asset record. Endpoints will
         typically only use the to_string function.
@@ -15,6 +15,7 @@ class HLSMasterManifest:
         """
         self.request = request
         self.asset_id = asset_id
+        self.rays_to_return = rays_to_return
         self.doc = ASSETS[asset_id]
         self.doc.update({'hls_version': 4})
 
@@ -36,11 +37,13 @@ class HLSMasterManifest:
         # variant streams
         scheme = self.request.scheme
         netloc = self.request.host
+        rays_provided = len(self.rays_to_return) > 0
         for ray_name, ray_data in self.doc['rays'].items():
-            content.append(hls_master_ray.format(**ray_data))
-            path = 'hls/vod/{}/{}.m3u8'.format(self.doc['_id'], ray_name)
-            qs = ''
-            url = urllib.parse.urlunparse((scheme, netloc, path, None, qs, None))
-            content.append(url)
+            if not rays_provided or ray_name in self.rays_to_return:
+                content.append(hls_master_ray.format(**ray_data))
+                path = 'hls/vod/{}/{}.m3u8'.format(self.doc['_id'], ray_name)
+                qs = ''
+                url = urllib.parse.urlunparse((scheme, netloc, path, None, qs, None))
+                content.append(url)
 
         return content
