@@ -26,14 +26,48 @@ async def test(request):  # pragma: no cover
 @routes.get('/hls/vod/{asset_id}.m3u8')
 async def master_get(request):
     asset_id = request.match_info.get('asset_id', '')
-    manifest = HLSMasterManifest(request, asset_id)
-    return web.Response(text=manifest.to_string(), headers=headers)
+
+    # breakpoint() #cagdelete
+    #cag-ex3 capture any errors in call to build Master
+    try:
+        manifest = HLSMasterManifest(request, asset_id)
+    except:
+        print(f'error in master_get with asset id {asset_id} - returning 404 here...')
+        return web.Response(status=404)
+
+    #cag-ex3 capture any errors in accessing property attribute of returned class 
+    try:
+        text=manifest.to_string()
+    except AttributeError:
+        print('error in master_get critical property attribute missing - return 404 here...')
+        return web.Response(status=404)
+    except:
+        print('error in master_get - return 404 here...')
+        return web.Response(status=404)
+
+    return web.Response(text=text, headers=headers)
 
 
 @routes.get('/hls/vod/{asset_id}/{ray}.m3u8')
 async def media_get(request):
     asset_id = request.match_info.get('asset_id', '')
     ray = request.match_info.get('ray', '')
-    manifest = HLSMediaManifest(request, asset_id, ray)
-    return web.Response(text=manifest.to_string(), headers=headers)
+    #cag-ex3 capture any errors in call to build Media
+    try:
+        manifest = HLSMediaManifest(request, asset_id, ray)
+    except:
+        print(f'error in media_get with asset id {asset_id} and ray {ray} - returning 404 here...')
+        return web.Response(status=404)
+
+    #cagtodo - test raised exception that is not attribute error 
+    try:
+        text=manifest.to_string()
+    except AttributeError:
+        print('error in media_get - critical property attribute missing - return 404 here...')
+        return web.Response(status=404)
+    except:
+        print('error in media_get - return 404 here...')
+        return web.Response(status=404)
+
+    return web.Response(text=text, headers=headers)
 
